@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "crawler": "^0.4.3"
+    "crawler": "^0.4.3",
+    "jsdom": "^8.1.0"
   }
 }

@@ -1,6 +1,8 @@
 var Crawler = require('crawler'),
     jsdom = require('jsdom'),
-    url = require('url');
+    url = require('url'),
+    modelNormalizer = require('./modelNormalizer'),
+    database = require('../../common/database');
 
 var SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"] a',
     SELECTOR_PRICE = 'div.main > table table td > b',
@@ -25,8 +27,9 @@ function MotoPageCrawler(url) {
             }
 
             info.url = url;
+            info = modelNormalizer(info);
 
-            console.dir(info); // temporary
+            database.saveMotoInfo(info);
         }
     });
 
