@@ -20,6 +20,10 @@ function MotosaleCrawler() {
         maxConnections : 10,
         callback : function (error, result, $) {
 
+            if (error) {
+                console.warn(error);
+            }
+
             var maximumMotoPageCount = parseInt( $('a:contains("Следующая")')[0].previousElementSibling.text ) - 1,
                 nextPageListUrl = null,
                 i = 0;
@@ -32,7 +36,7 @@ function MotosaleCrawler() {
                     nextPageListUrl = MOTOSALE_DOMAIN + DEFAULT_PAGE_LIST_PARAMS + i * 10;
                     motoListPageCrawler(nextPageListUrl);
 
-                    if (i > 2) { //TODO: for development only
+                    if (i > 1) { //TODO: for development only
                         break;
                     }
 
