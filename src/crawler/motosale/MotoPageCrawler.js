@@ -13,7 +13,7 @@ function MotoPageCrawler(url) {
     var crawler = new Crawler({
         jQuery: jsdom,
         forceUTF8: true,
-        maxConnections : 10,
+        maxConnections : 1,
         callback : function (error, result, $) {
             if (error) {
                 console.warn(error, arguments);

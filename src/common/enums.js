@@ -1,6 +1,10 @@
 
 function Enums() {
 
+    this.domains = {
+        motosale: 'http://www.motosale.com.ua/'
+    };
+
     this.documents = {
         fake: 'fake_documents',
         unregistered: 'unregistered',
@@ -28,38 +32,38 @@ function Enums() {
     this.states = {
         ukraine: {
             any: "any",
-            vinnitsa: "Vinnitsa",
-            dnepropetrovsk: "Dnepropetrovsk",
+            vinnytsia: "Vinnytsia",
+            dnepropetrovsk: "Dnipropetrovsk",
             donetsk: "Donetsk",
-            gitomir: "Zhitomir",
-            zaporozie: "Zaporozie",
-            ivanofrankovsk: "Ivano-Frankovsk",
+            zhytomyr: "zhytomyr",
+            zaporizhzhia: "Zaporizhzhia",
+            ivanoFrankivsk: "Ivano-Frankivsk",
             kerch: "Kerch",
-            kiev: "Kiev",
-            kirovograd: "Kirovograd",
+            kyiv: "Kyiv",
+            kirovohrad: "Kirovohrad",
             kremenchyg: "Kremenchyg",
-            krivoirog: "Krivoi Rog",
+            kryvyiRih: "Kryvyi Rih",
             crimia: "Crimea",
-            lygansk: "Lygansk",
-            lyck: "Lyck",
+            luhansk: "luhansk",
+            lutsk: "Lutsk",
             lviv: "Lviv",
             melitopol: "Melitopol",
-            nikolaev: "Nikolaev",
-            odessa: "Odessa",
+            mykolaiv: "Mykolaiv",
+            odesa: "Odesa",
             poltava: "Poltava",
-            rovno: "Rovno",
+            rivne: "Rivne",
             sevastopol: "Sevastopol",
             simferopol: "Simferopol",
-            symi: "Symi",
-            ternopol: "Ternopol",
-            uzgorod: "Uzhgorod",
+            sumy: "Sumy",
+            ternopil: "Ternopil",
+            uzhhorod: "Uzhhorod",
             feodosia: "Feodosia",
-            kharkiv: "Kharkov",
-            herson: "Kherson",
-            hmelnitskii: "Khme",
-            cherkassi: "Cherkassi",
-            chernigov: "Chernigov",
-            chernovtsi: "Chernovtsi"
+            kharkiv: "Kharkiv",
+            kherson: "Kherson",
+            khmelnytskyi: "Khmelnytskyi",
+            cherkasy: "Cherkasy",
+            chernihiv: "Chernihiv",
+            chernivtsi: "Chernivtsi"
         }
     };
 
