@@ -1,4 +1,7 @@
 
+
+module.exports = new Enums();
+
 function Enums() {
 
     this.domains = {
@@ -70,5 +73,3 @@ function Enums() {
 
 
 }
-
-module.exports = new Enums();

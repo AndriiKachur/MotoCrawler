@@ -10,6 +10,9 @@ var SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"] a
 
 var c = 0;
 
+module.exports = MotoListPageCrawler;
+
+
 function MotoListPageCrawler(url) {
     var crawler = new Crawler({
         jQuery: jsdom,
@@ -31,7 +34,6 @@ function MotoListPageCrawler(url) {
     crawler.queue(url);
 }
 
-module.exports = MotoListPageCrawler;
 
 
 

@@ -5,6 +5,8 @@ var enums = require('../../common/enums'),
     motoType = enums.type;
 
 
+module.exports = ModelNormalizer;
+
 var regionTransformMap = {
         "Любой": ukraineStates.any,
         "Винница": ukraineStates.vinnytsia,
@@ -73,7 +75,7 @@ var regionTransformMap = {
     };
 
 
-function modelNormalizer(object) {
+function ModelNormalizer(object) {
     var copy = extendFn({}, object);
 
     copy.region = regionTransformMap[object.region];
@@ -83,5 +85,3 @@ function modelNormalizer(object) {
 
     return copy;
 }
-
-module.exports = modelNormalizer;

@@ -7,6 +7,9 @@ var Crawler = require('crawler'),
 var MOTOSALE_DOMAIN = enums.domains.motosale,
     DEFAULT_PAGE_LIST_PARAMS = '?search=moto&model=&price[min]=&price[max]=&city=&in[min]=&in[max]=&run=&v=&type_obj=1&offset=';
 
+
+module.exports = MotosaleCrawler;
+
 function MotosaleCrawler() {
     console.log('motosale crawler started');
 
@@ -43,4 +46,3 @@ function MotosaleCrawler() {
     c.queue(MOTOSALE_DOMAIN + DEFAULT_PAGE_LIST_PARAMS + '0');
 }
 
-module.exports = MotosaleCrawler;

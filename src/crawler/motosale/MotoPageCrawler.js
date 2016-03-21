@@ -1,7 +1,7 @@
 var Crawler = require('crawler'),
     jsdom = require('jsdom'),
     url = require('url'),
-    modelNormalizer = require('./modelNormalizer'),
+    modelNormalizer = require('./ModelNormalizer'),
     database = require('../../common/database');
 
 var SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"] a',
@@ -10,6 +10,8 @@ var SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"] a
     SELECTOR_DOCUMENTS = 'td:contains("Документы") + td[valign="middle"]',
     SELECTOR_THEME = 'td:contains("Тема") + td[valign="middle"]',
     SELECTOR_MESSAGE = 'td:contains("Сообщение") + td[valign="top"]';
+
+module.exports = MotoPageCrawler;
 
 function MotoPageCrawler(url) {
     var crawler = new Crawler({
@@ -37,9 +39,6 @@ function MotoPageCrawler(url) {
 
     crawler.queue(url);
 }
-
-module.exports = MotoPageCrawler;
-
 
 function extractMainMotoInfo($) {
     var infoElems = $(SELECTOR_MAIN_MOTO_INFO),
