@@ -48,7 +48,7 @@ function saveMotoInfo(data) {
 }
 
 function isMotoInfoValid(data) {
-    return data.title && data.documents && data.manufacture && data.region && data.url && data.model;
+    return data.title && data.documents && data.manufacture && data.region && data.url;
 }
 
 function getMotoDuplicateCount(data) {

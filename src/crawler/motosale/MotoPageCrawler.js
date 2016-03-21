@@ -13,32 +13,34 @@ var SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"] a
 
 module.exports = MotoPageCrawler;
 
+
 function MotoPageCrawler(url) {
-    var crawler = new Crawler({
-        jQuery: jsdom,
-        forceUTF8: true,
-        maxConnections : 1,
-        callback : function (error, result, $) {
-            if (error) {
-                console.warn(error, arguments);
-            }
-
-            var info = extractMainMotoInfo($);
-
-            if (!info) {
-                console.warn('Cant parse main info', url);
-                return;
-            }
-
-            info.url = url;
-            info = modelNormalizer(info);
-
-            database.saveMotoInfo(info);
-        }
-    });
-
     crawler.queue(url);
 }
+
+var crawler = new Crawler({
+    jQuery: jsdom,
+    forceUTF8: true,
+    maxConnections : 40,
+    callback : function (error, result, $) {
+        if (error) {
+            console.warn(error, arguments);
+        }
+
+        var url = $.ajaxSettings.url,
+            info = extractMainMotoInfo($);
+
+        if (!info) {
+            console.warn('Cant parse main info', url);
+            return;
+        }
+
+        info.url = url;
+        info = modelNormalizer(info);
+
+        database.saveMotoInfo(info);
+    }
+});
 
 function extractMainMotoInfo($) {
     var infoElems = $(SELECTOR_MAIN_MOTO_INFO),

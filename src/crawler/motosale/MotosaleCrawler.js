@@ -5,7 +5,8 @@ var Crawler = require('crawler'),
     enums = require('../../common/enums');
 
 var MOTOSALE_DOMAIN = enums.domains.motosale,
-    DEFAULT_PAGE_LIST_PARAMS = '?search=moto&model=&price[min]=&price[max]=&city=&in[min]=&in[max]=&run=&v=&type_obj=1&offset=';
+    DEFAULT_PAGE_LIST_PARAMS = '?search=moto&model=&price[min]=&price[max]=&city=&in[min]=&in[max]=&run=&v=&type_obj=1&offset=',
+    SELECTOR_MAX_PAGE = 'a:contains("Следующая")';
 
 
 module.exports = MotosaleCrawler;
@@ -24,7 +25,7 @@ function MotosaleCrawler() {
                 console.warn(error);
             }
 
-            var maximumMotoPageCount = parseInt( $('a:contains("Следующая")')[0].previousElementSibling.text ) - 1,
+            var maximumMotoPageCount = parseInt( $(SELECTOR_MAX_PAGE).first().prev().text() ) - 1,
                 nextPageListUrl = null,
                 i = 0;
 
@@ -36,7 +37,7 @@ function MotosaleCrawler() {
                     nextPageListUrl = MOTOSALE_DOMAIN + DEFAULT_PAGE_LIST_PARAMS + i * 10;
                     motoListPageCrawler(nextPageListUrl);
 
-                    if (i > 1) { //TODO: for development only
+                    if (i > 2) {
                         break;
                     }
 
