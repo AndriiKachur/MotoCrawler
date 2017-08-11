@@ -1,12 +1,15 @@
-var MongoClient = require('mongodb').MongoClient,
-    assert = require('assert');
+module.exports = Database;
 
-var counter = 0,
+const MongoClient = require('mongodb').MongoClient,
+    assert = require('assert'),
+	logger = require('./logger')();
+
+let validMotos = 0,
+	invalidMotos = 0,
     database = null,
     motoCollection = null,
-    url = 'mongodb://127.0.0.1:27017/test';
+    url = 'mongodb://127.0.0.1:27017/motos';
 
-module.exports = Database;
 
 MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
@@ -14,28 +17,29 @@ MongoClient.connect(url, function(err, db) {
     database = db;
     motoCollection = database.collection('motos');
 
-    console.log("DATABASE connected correctly to MongoDB server.");
+    log("DATABASE connected correctly to MongoDB server.");
 });
 
 function Database() {
-    console.warn('DATABASE Closing connection');
+    warn('DATABASE Closing connection');
     database.close();
 }
 
 Database.saveMotoInfo = function(moto) {
     if (!isMotoInfoValid(moto)) {
-        ++counter;
-        console.warn(counter, 'Not valid moto info', moto);
+        ++invalidMotos;
+        warn('Not valid moto info', moto);
     } else {
         getMotoDuplicateCount(moto).then(function(duplicateCount) {
-            var isExists = duplicateCount > 0;
-            ++counter;
+            let isExists = duplicateCount > 0;
 
             if (!isExists) {
-                console.info(counter, 'TODO: saving moto to mongo', moto);
+            	++validMotos;
+                log('TODO: saving moto to db', moto.url);
                 saveMotoInfo(moto);
             } else {
-                console.warn(counter, 'Moto already exists', moto);
+            	++invalidMotos;
+                warn('Moto already exists', moto.url);
             }
         });
     }
@@ -55,4 +59,12 @@ function getMotoDuplicateCount(data) {
     return motoCollection.find({
             url: data.url
         }).count();
+}
+
+function log(...args) {
+	logger.log.apply(console, [validMotos, invalidMotos, args]);
+}
+
+function warn(...args) {
+	logger.warn.apply(console, [validMotos, invalidMotos, args]);
 }

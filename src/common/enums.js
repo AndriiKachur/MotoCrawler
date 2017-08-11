@@ -1,6 +1,5 @@
-
-
 module.exports = new Enums();
+
 
 function Enums() {
 

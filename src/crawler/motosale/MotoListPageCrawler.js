@@ -1,25 +1,24 @@
-var Crawler = require('crawler'),
-    jsdom = require('jsdom'),
-    motoPageCrawler = require('./MotoPageCrawler'),
-    enums = require('../../common/enums');
-
-var SELECTOR_ADS_TITLE = 'div > div> table > tbody > tr > td > h2 > a',
-    SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"] a',
-    SELECTOR_PRICE = 'div.main > table table td > b',
-    SELECTOR_ENGINE_CC = 'td:contains("Объём двигателя") + td[valign="middle"]',
-    SELECTOR_DOCUMENTS = 'td:contains("Документы") + td[valign="middle"]';
-
-var c = 0;
-
 module.exports = MotoListPageCrawler;
 
-var crawler = new Crawler({
+const Crawler = require('crawler'),
+	jsdom = require('jsdom'),
+	motoPageCrawler = require('./MotoPageCrawler'),
+	enums = require('../../common/enums'),
+	logger = require('../../common/logger')();
+
+const SELECTOR_ADS_TITLE = 'div > div> table > tbody > tr > td > h2 > a';
+
+let pageNumber = 0;
+
+
+const crawler = new Crawler({
     jQuery: jsdom,
     forceUTF8: true,
-    maxConnections : 10,
+    maxConnections : 30,
     callback : function (error, result, $) {
         if (error) {
-            console.warn(error, arguments);
+			logger.warn(error, arguments);
+			return;
         }
 
         $(SELECTOR_ADS_TITLE).each(function(index, a) {
@@ -29,7 +28,7 @@ var crawler = new Crawler({
 });
 
 function MotoListPageCrawler(url) {
-    console.log(c++, 'list page parsing');
+	logger.log(pageNumber++, 'list page parsing');
 
     crawler.queue(url);
 }

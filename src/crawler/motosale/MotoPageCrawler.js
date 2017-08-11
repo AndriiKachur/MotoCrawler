@@ -1,37 +1,40 @@
-var Crawler = require('crawler'),
-    jsdom = require('jsdom'),
-    url = require('url'),
-    modelNormalizer = require('./ModelNormalizer'),
-    database = require('../../common/database');
+module.exports = MotoPageCrawler;
 
-var SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"] a',
+const Crawler = require('crawler'),
+    jsdom = require('jsdom'),
+    modelNormalizer = require('./ModelNormalizer'),
+    database = require('../../common/database'),
+	logger = require('../../common/logger')();
+
+const SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"] a',
     SELECTOR_PRICE = 'div.main > table table td > b',
     SELECTOR_ENGINE_CC = 'td:contains("Объём двигателя") + td[valign="middle"]',
     SELECTOR_DOCUMENTS = 'td:contains("Документы") + td[valign="middle"]',
     SELECTOR_THEME = 'td:contains("Тема") + td[valign="middle"]',
-    SELECTOR_MESSAGE = 'td:contains("Сообщение") + td[valign="top"]';
-
-module.exports = MotoPageCrawler;
+    SELECTOR_MESSAGE = 'td:contains("Сообщение") + td[valign="top"]',
+	SELECTOR_YEAR = 'td:contains("Год выпуска") + td[valign="middle"]';
 
 
 function MotoPageCrawler(url) {
-    crawler.queue(url);
+    pageCrawler.queue(url);
 }
 
-var crawler = new Crawler({
+
+let pageCrawler = new Crawler({
     jQuery: jsdom,
     forceUTF8: true,
-    maxConnections : 40,
+    maxConnections : 100,
     callback : function (error, result, $) {
         if (error) {
-            console.warn(error, arguments);
+			logger.warn(error, arguments);
+			return;
         }
 
-        var url = $.ajaxSettings.url,
+        let url = $.ajaxSettings.url,
             info = extractMainMotoInfo($);
 
         if (!info) {
-            console.warn('Cant parse main info', url);
+			logger.warn('Cant parse main info', url);
             return;
         }
 
@@ -43,7 +46,7 @@ var crawler = new Crawler({
 });
 
 function extractMainMotoInfo($) {
-    var infoElems = $(SELECTOR_MAIN_MOTO_INFO),
+    let infoElems = $(SELECTOR_MAIN_MOTO_INFO),
         messageElement = $(SELECTOR_MESSAGE).first();
 
     if (!infoElems.length) {
@@ -59,6 +62,7 @@ function extractMainMotoInfo($) {
         model: infoElems[3].text,
         price: parseInt( $(SELECTOR_PRICE).text() ),
         cc: parseInt( $(SELECTOR_ENGINE_CC).text() ),
+		year: parseInt( $(SELECTOR_YEAR).text() ),
         documents: $(SELECTOR_DOCUMENTS).text(),
         title: $(SELECTOR_THEME).text(),
         message: messageElement.text()

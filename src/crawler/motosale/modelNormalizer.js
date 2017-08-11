@@ -1,13 +1,12 @@
-var enums = require('../../common/enums'),
+module.exports = ModelNormalizer;
+
+const enums = require('../../common/enums'),
     extendFn = require('util')._extend,
     ukraineStates = enums.states.ukraine,
     registrationStates = enums.documents,
     motoType = enums.type;
 
-
-module.exports = ModelNormalizer;
-
-var regionTransformMap = {
+const regionTransformMap = {
         "Любой": ukraineStates.any,
         "Винница": ukraineStates.vinnytsia,
         "Днепропетровск": ukraineStates.dnepropetrovsk,
@@ -76,7 +75,7 @@ var regionTransformMap = {
 
 
 function ModelNormalizer(object) {
-    var copy = extendFn({}, object);
+    let copy = extendFn({}, object);
 
     copy.region = regionTransformMap[object.region];
     copy.documents = documentsTransformMap[object.documents];
