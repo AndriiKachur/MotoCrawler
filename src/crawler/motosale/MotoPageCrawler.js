@@ -1,7 +1,7 @@
 module.exports = MotoPageCrawler;
 
 const Crawler = require('crawler'),
-    jsdom = require('jsdom'),
+    jsdom = require('jsdom/lib/old-api'),
     modelNormalizer = require('./ModelNormalizer'),
     database = require('../../common/database'),
 	logger = require('../../common/logger')();
@@ -24,24 +24,29 @@ let pageCrawler = new Crawler({
     jQuery: jsdom,
     forceUTF8: true,
     maxConnections : 100,
-    callback : function (error, result, $) {
+	skipDuplicates: true,
+    callback : function (error, result, done) {
+		const $ = result.$;
+
         if (error) {
 			logger.warn(error, arguments);
+			done();
 			return;
         }
 
-        let url = $.ajaxSettings.url,
+        let url = result.request.href,
             info = extractMainMotoInfo($);
 
         if (!info) {
 			logger.warn('Cant parse main info', url);
-            return;
+			done();
+			return;
         }
 
         info.url = url;
         info = modelNormalizer(info);
 
-        database.saveMotoInfo(info);
+        database.saveMotoInfo(info).then(done);
     }
 });
 

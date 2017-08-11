@@ -1,16 +1,17 @@
 {
   "name": "moto_crawler",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "repository": "https://github.com/Nilanno/MotoCrawler",
   "description": "",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "crawler": "^0.4.3",
-    "jsdom": "^8.1.0",
-    "mongodb": "^2.1.10"
+    "crawler": "~1.0.5",
+    "jsdom": "~11.1.0",
+    "mongodb": "~2.2.31"
   }
 }

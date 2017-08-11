@@ -1,7 +1,7 @@
 module.exports = MotosaleCrawler;
 
 const Crawler = require('crawler'),
-    jsdom = require('jsdom'),
+    jsdom = require('jsdom/lib/old-api'),
     motoListPageCrawler = require('./MotoListPageCrawler'),
     enums = require('../../common/enums'),
 	logger = require('../../common/logger')();
@@ -18,10 +18,12 @@ function MotosaleCrawler() {
         forceUTF8: true,
         jQuery: jsdom,
         maxConnections : 10,
-        callback : function (error, result, $) {
+        callback : function (error, result, done) {
+        	const $ = result.$;
 
             if (error) {
 				logger.warn(error);
+				done();
 				return;
             }
 
@@ -43,6 +45,8 @@ function MotosaleCrawler() {
                 }
 
             }
+
+            done();
 
         }
     });

@@ -29,8 +29,9 @@ Database.saveMotoInfo = function(moto) {
     if (!isMotoInfoValid(moto)) {
         ++invalidMotos;
         warn('Not valid moto info', moto);
+        return Promise.resolve();
     } else {
-        getMotoDuplicateCount(moto).then(function(duplicateCount) {
+        return getMotoDuplicateCount(moto).then(function(duplicateCount) {
             let isExists = duplicateCount > 0;
 
             if (!isExists) {
