@@ -39,7 +39,12 @@ const regionTransformMap = {
         "Хмельницкий": ukraineStates.khmelnytskyi,
         "Черкассы": ukraineStates.cherkasy,
         "Чернигов": ukraineStates.chernihiv,
-        "Черновцы": ukraineStates.chernivtsi
+        "Черновцы": ukraineStates.chernivtsi,
+        "Каменец-Подольский": ukraineStates.kamenetsPodolski,
+        "Краматорск": ukraineStates.kramatorsk,
+        "Бердянск": ukraineStates.berdyansk,
+        "Каменское": ukraineStates.kamenskoe,
+        "Мариуполь": ukraineStates.mariupol
     },
 
     documentsTransformMap = {

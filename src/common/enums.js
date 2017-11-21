@@ -65,7 +65,12 @@ function Enums() {
             khmelnytskyi: "Khmelnytskyi",
             cherkasy: "Cherkasy",
             chernihiv: "Chernihiv",
-            chernivtsi: "Chernivtsi"
+            chernivtsi: "Chernivtsi",
+            kamenetsPodolski: "Kamenets Podolskii",
+            kramatorsk: "Kramatorsk",
+            berdyansk: "Berdyanks",
+            kamenskoe: "Kamenskoe",
+            mariupol: "Mariupol"
         }
     };
 

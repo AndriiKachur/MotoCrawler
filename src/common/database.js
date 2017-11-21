@@ -8,6 +8,7 @@ let validMotos = 0,
 	invalidMotos = 0,
     database = null,
     motoCollection = null,
+    wrongMotosCollection = null,
     url = 'mongodb://127.0.0.1:27017/motos';
 
 
@@ -16,6 +17,7 @@ MongoClient.connect(url, function(err, db) {
 
     database = db;
     motoCollection = database.collection('motos');
+    wrongMotosCollection = database.collection('wrongMotos');
 
     log("DATABASE connected correctly to MongoDB server.");
 });
@@ -29,8 +31,12 @@ Database.saveMotoInfo = function(moto) {
     if (!isMotoInfoValid(moto)) {
         ++invalidMotos;
         warn('Not valid moto info', moto);
+        wrongMotosCollection.insertOne(moto);
+
         return Promise.resolve();
+
     } else {
+
         return getMotoDuplicateCount(moto).then(function(duplicateCount) {
             let isExists = duplicateCount > 0;
 
