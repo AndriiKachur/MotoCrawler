@@ -6,6 +6,7 @@ const MongoClient = require('mongodb').MongoClient,
 
 let validMotos = 0,
 	invalidMotos = 0,
+    updatedMotos = 0,
     database = null,
     motoCollection = null,
     wrongMotosCollection = null,
@@ -37,6 +38,8 @@ Database.saveMotoInfo = function(moto) {
 
     } else {
 
+        //TODO: get from db, define is update needed
+
         return getMotoDuplicateCount(moto).then(function(duplicateCount) {
             let isExists = duplicateCount > 0;
 
@@ -45,8 +48,9 @@ Database.saveMotoInfo = function(moto) {
                 log('TODO: saving moto to db', moto.url);
                 saveMotoInfo(moto);
             } else {
-            	++invalidMotos;
+            	++updatedMotos;
                 warn('Moto already exists', moto.url);
+                updateMoto(moto);
             }
         });
     }
@@ -55,6 +59,12 @@ Database.saveMotoInfo = function(moto) {
 function saveMotoInfo(data) {
     motoCollection.insertOne(data, function (err, result) {
         assert.equal(err, null);
+    });
+}
+
+function updateMoto(data) {
+    motoCollection.updateOne({url: data.url}, data, function (err, result) {
+       assert.equal(err, null);
     });
 }
 
@@ -69,9 +79,9 @@ function getMotoDuplicateCount(data) {
 }
 
 function log(...args) {
-	logger.log.apply(console, [validMotos, invalidMotos, args]);
+	logger.log.apply(console, [validMotos, updatedMotos, invalidMotos, args]);
 }
 
 function warn(...args) {
-	logger.warn.apply(console, [validMotos, invalidMotos, args]);
+	logger.warn.apply(console, [validMotos, updatedMotos, invalidMotos, args]);
 }

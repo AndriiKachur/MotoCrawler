@@ -12,7 +12,8 @@ const SELECTOR_MAIN_MOTO_INFO = 'div.main > table > tbody > tr > td[colspan="2"]
     SELECTOR_DOCUMENTS = 'td:contains("Документы") + td[valign="middle"]',
     SELECTOR_THEME = 'td:contains("Тема") + td[valign="middle"]',
     SELECTOR_MESSAGE = 'td:contains("Сообщение") + td[valign="top"]',
-	SELECTOR_YEAR = 'td:contains("Год выпуска") + td[valign="middle"]';
+	SELECTOR_YEAR = 'td:contains("Год выпуска") + td[valign="middle"]',
+    SELECTOR_ARCHIVED = '[src="images/archiv.png"]';
 
 
 function MotoPageCrawler(url) {
@@ -70,7 +71,8 @@ function extractMainMotoInfo($) {
 		year: parseInt( $(SELECTOR_YEAR).text() ),
         documents: $(SELECTOR_DOCUMENTS).text(),
         title: $(SELECTOR_THEME).text(),
-        message: messageElement.text()
+        message: messageElement.text(),
+        isActive: $(SELECTOR_ARCHIVED).length === 0
     };
 }
 
